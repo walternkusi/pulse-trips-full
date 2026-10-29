@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch --env-file=.env src/server.js",
-    "start": "node --env-file=.env src/server.js"
+    "start": "node src/server.js"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "dependencies": {
     "cors": "^2.8.5",
