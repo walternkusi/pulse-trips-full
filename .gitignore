@@ -1,0 +1,18 @@
+# dependencies and build output
+node_modules/
+.next/
+out/
+build/
+
+# secrets: real values live only in .env files, never in git
+.env
+.env.*
+!.env.example
+
+# logs, local data, OS junk
+*.log
+storage/
+.DS_Store
+
+# empty stray lockfiles from running npm in the wrong folder
+/package-lock.json
