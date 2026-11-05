@@ -26,7 +26,7 @@ export function Gallery({ images = [], video, title }) {
           // Muted + playsInline is required for autoplay on iOS. Reduced-motion users get the poster only.
           <video src={s.video} poster={s.poster} autoPlay muted loop playsInline preload="metadata" aria-label={s.alt} className="motion-safe" />
         ) : (
-          <img src={s.src} alt={s.alt} fetchPriority={i === 0 ? 'high' : 'auto'} width="1600" height="900" />
+          <img key={i} src={s.src} alt={s.alt} fetchPriority={i === 0 ? 'high' : 'auto'} width="1600" height="900" />
         )}
         {slides.length > 1 && (
           <>

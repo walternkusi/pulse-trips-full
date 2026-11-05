@@ -80,6 +80,7 @@ export const api = {
     // Tour catalogue editor
     tours: (token) => request('/admin/tours', { token }),
     createTour: (token, data) => post('/admin/tours', data, { token }),
+    setPublished: (token, slug, published) => request(`/admin/tours/${q(slug)}/published`, { method: 'PATCH', body: JSON.stringify({ published }), token }),
     saveTour: (token, slug, data) => request(`/admin/tours/${q(slug)}`, { method: 'PUT', body: JSON.stringify(data), token }),
     uploadPhoto: (token, dataUrl) => post('/admin/uploads', { dataUrl }, { token }),
     searchPhotos: (token, query, page = 1) => request(`/admin/photos/search?q=${q(query)}&page=${page}`, { token }),

@@ -1,0 +1,238 @@
+/* =============================================================================
+   ADMIN DASHBOARD: GLASSMORPHISM THEME
+   Loaded only on /admin routes. Tailwind utilities (scoped under .glass-root) do the
+   layout; this file holds the design tokens, the reusable `glass-card`, the background
+   and a theme layer that restyles the older admin screens (tour editor, guests, roster)
+   without changing their code.
+   ============================================================================= */
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Tailwind variable defaults (its global base layer is skipped, so they are scoped here) ---------- */
+.glass-root, .glass-root *, .glass-root ::before, .glass-root ::after {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+  --tw-contain-size:  ;
+  --tw-contain-layout:  ;
+  --tw-contain-paint:  ;
+  --tw-contain-style:  
+}
+
+.glass-root ::backdrop {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+  --tw-contain-size:  ;
+  --tw-contain-layout:  ;
+  --tw-contain-paint:  ;
+  --tw-contain-style:  
+}
+
+/* ---------- Background shell ---------- */
+.glass-root {
+  position: fixed; inset: 0; z-index: 80; overflow: hidden; color: #fff; color-scheme: dark;
+  font-family: var(--f-body), Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased;
+  background: linear-gradient(135deg, #031a24 0%, #07414f 36%, #0a3a6b 72%, #08193f 100%);
+  transition: background .6s;
+}
+.glass-root[data-theme='midnight'] { background: linear-gradient(135deg, #090d1c 0%, #1a1b4b 42%, #2b1a5c 74%, #0a0f24 100%); }
+.glass-blob { position: absolute; border-radius: 9999px; filter: blur(90px); opacity: .34; pointer-events: none; animation: glass-float 18s ease-in-out infinite alternate; }
+.glass-blob.a { width: 520px; height: 520px; left: -140px; top: -120px; background: #06b6d4; }
+.glass-blob.b { width: 460px; height: 460px; right: -120px; top: 18%; background: #2563eb; animation-duration: 22s; animation-direction: alternate-reverse; }
+.glass-blob.c { width: 420px; height: 420px; left: 32%; bottom: -180px; background: #14b8a6; animation-duration: 26s; }
+.glass-root[data-theme='midnight'] .glass-blob.a { background: #7c3aed; }
+.glass-root[data-theme='midnight'] .glass-blob.b { background: #4f46e5; }
+.glass-root[data-theme='midnight'] .glass-blob.c { background: #db2777; opacity: .35; }
+@keyframes glass-float { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(50px, 40px, 0) scale(1.12); } }
+
+/* ---------- The reusable glass card ---------- */
+.glass-card {
+  /* white tint for the glass look + a thin dark layer so white text always has enough contrast */
+  background: linear-gradient(rgb(2 16 26 / .24), rgb(2 16 26 / .24)), rgb(255 255 255 / .11);
+  -webkit-backdrop-filter: blur(18px) saturate(1.35); backdrop-filter: blur(18px) saturate(1.35);
+  border: 1px solid rgb(255 255 255 / .2); border-radius: 1rem;
+  box-shadow: 0 8px 32px rgb(2 20 35 / .28), inset 0 1px 0 rgb(255 255 255 / .12);
+}
+.glass-card-strong { background: linear-gradient(rgb(2 16 26 / .24), rgb(2 16 26 / .24)), rgb(255 255 255 / .15); }
+/* Nearly opaque: a glass panel inside another glass panel cannot blur the page behind it, so text would bleed through. */
+.glass-pop { background: rgb(7 28 41 / .97); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border: 1px solid rgb(255 255 255 / .22); border-radius: .75rem; box-shadow: 0 12px 36px rgb(0 0 0 / .4); }
+
+/* Shimmer skeleton */
+.glass-shimmer { position: relative; overflow: hidden; background: rgb(255 255 255 / .1); border-radius: .75rem; }
+.glass-shimmer::after { content: ''; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgb(255 255 255 / .18), transparent); animation: shimmer 1.4s infinite; }
+
+/* Thin scrollbars */
+.glass-scroll { scrollbar-width: thin; scrollbar-color: rgb(255 255 255 / .3) transparent; }
+.glass-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
+.glass-scroll::-webkit-scrollbar-thumb { background: rgb(255 255 255 / .28); border-radius: 8px; }
+
+/* ---------- Base inside the shell (Tailwind's preflight is off, so a few basics live here) ---------- */
+/* The public site has a `.block` class (a bordered, padded section). Tailwind's `block` utility must not inherit it. */
+.glass-root .block { padding: 0; border: 0; }
+/* Buttons: browsers give them a grey box. :where() keeps this reset at zero specificity so every class still wins. */
+:where(.glass-root) :where(button) { background: transparent; border: 0; padding: 0; margin: 0; }
+.glass-root h1, .glass-root h2, .glass-root h3, .glass-root h4 { font-family: var(--f-body), Inter, system-ui, sans-serif; color: #fff; letter-spacing: -.01em; }
+.glass-root a { color: inherit; text-decoration: none; }
+.glass-root ::placeholder { color: rgb(255 255 255 / .55); }
+.glass-root select option { background: #0a3a4a; color: #fff; }
+.glass-root :focus-visible { outline: 2px solid #67e8f9; outline-offset: 2px; border-radius: 6px; }
+.glass-root input[type='date']::-webkit-calendar-picker-indicator { filter: invert(1); opacity: .7; }
+.glass-root .recharts-surface:focus, .glass-root .recharts-wrapper:focus { outline: none; }
+
+/* ---------- Theme layer for the older admin screens ----------
+   They were written against the light site's CSS variables (--surface, --text, ...). Redefining
+   those variables here turns every one of them glass-and-teal at once. */
+.glass-root {
+  --bg: transparent; --surface: rgb(255 255 255 / .09); --tint: rgb(255 255 255 / .08);
+  --text: #fff; --muted: rgb(255 255 255 / .74);
+  --line: rgb(255 255 255 / .16); --line-strong: rgb(255 255 255 / .3);
+  --navy-950: #031a24; --navy-900: #fff; --navy-800: rgb(255 255 255 / .14); --navy-700: rgb(255 255 255 / .88); --navy-500: rgb(255 255 255 / .7);
+  --magenta: #67e8f9; --coral: #2dd4bf; --orange: #fbbf24;
+  --grad: linear-gradient(135deg, #06b6d4, #14b8a6 60%, #34d399);
+  --grad-btn: linear-gradient(135deg, #0e7490, #0f766e);
+  --ink: #fff; --ink-2: rgb(255 255 255 / .88); --brand: #0e7490; --brand-dark: #155e75; --accent-soft: rgb(34 211 238 / .14); --accent-softer: rgb(255 255 255 / .07); --tint-2: rgb(255 255 255 / .12);
+  --ok: #6ee7b7; --ok-bg: rgb(16 185 129 / .2); --warn: #fcd34d; --warn-bg: rgb(245 158 11 / .2); --err: #fda4af; --err-bg: rgb(244 63 94 / .22);
+  --shadow-sm: 0 4px 14px rgb(0 0 0 / .18); --shadow: 0 8px 28px rgb(0 0 0 / .28); --shadow-lg: 0 18px 48px rgb(0 0 0 / .4);
+}
+.glass-root .card { background: linear-gradient(rgb(2 16 26 / .24), rgb(2 16 26 / .24)), rgb(255 255 255 / .11); -webkit-backdrop-filter: blur(18px) saturate(1.35); backdrop-filter: blur(18px) saturate(1.35); border: 1px solid rgb(255 255 255 / .2); border-radius: 1rem; box-shadow: 0 8px 32px rgb(2 20 35 / .28), inset 0 1px 0 rgb(255 255 255 / .12); }
+.glass-root .kpi { background: rgb(255 255 255 / .09); }
+.glass-root .btn { box-shadow: 0 8px 20px rgb(6 182 212 / .22); }
+.glass-root .btn:hover { box-shadow: 0 12px 26px rgb(6 182 212 / .34); }
+.glass-root .btn-outline, .glass-root .btn-danger, .glass-root .btn-ghost { box-shadow: none; }
+.glass-root .btn-outline { background: rgb(255 255 255 / .08); border-color: rgb(255 255 255 / .3); color: #fff; }
+.glass-root .btn-outline:hover { background: rgb(255 255 255 / .16); border-color: #67e8f9; color: #fff; }
+.glass-root .btn-danger { background: rgb(244 63 94 / .16); border-color: rgb(251 113 133 / .5); color: #fecdd3; }
+.glass-root .btn-danger:hover { background: rgb(244 63 94 / .3); }
+.glass-root .btn-ghost:hover { background: rgb(255 255 255 / .12); }
+.glass-root .chip { background: rgb(255 255 255 / .14); color: #fff; }
+.glass-root .chip-ok { background: rgb(16 185 129 / .22); color: #a7f3d0; }
+.glass-root .chip-warn { background: rgb(245 158 11 / .22); color: #fde68a; }
+.glass-root .chip-brand { background: linear-gradient(135deg, #0891b2, #0d9488); color: #fff; }
+.glass-root .chip-btn { background: rgb(255 255 255 / .08); border-color: rgb(255 255 255 / .28); color: #fff; }
+.glass-root .chip-btn:hover { background: rgb(255 255 255 / .16); color: #fff; }
+.glass-root .chip-btn.on { background: #0e7490; border-color: #22d3ee; color: #fff; }
+.glass-root .field input, .glass-root .field select, .glass-root .field textarea, .glass-root .promo-row input, .glass-root .note-form textarea,
+.glass-root .admin-filters input, .glass-root .admin-filters select, .glass-root .admin-search { background: rgb(255 255 255 / .09); border-color: rgb(255 255 255 / .28); color: #fff; }
+.glass-root .field input:focus, .glass-root .field select:focus, .glass-root .field textarea:focus { border-color: #22d3ee; box-shadow: 0 0 0 4px rgb(34 211 238 / .2); background: rgb(255 255 255 / .13); }
+.glass-root .field input:hover, .glass-root .field select:hover, .glass-root .field textarea:hover { border-color: rgb(255 255 255 / .5); }
+.glass-root .check-row input, .glass-root .field input[type='checkbox'] { accent-color: #14b8a6; }
+.glass-root .notice-ok { color: #a7f3d0; } .glass-root .notice-warn { color: #fde68a; } .glass-root .notice-err { color: #fecdd3; }
+.glass-root .ok-text { color: #6ee7b7; } .glass-root .err-text { color: #fda4af; } .glass-root .warn-text { color: #fcd34d; }
+.glass-root .status { background: rgb(255 255 255 / .14); color: #fff; }
+.glass-root .status-confirmed { background: rgb(16 185 129 / .25); color: #a7f3d0; }
+.glass-root .status-pending { background: rgb(245 158 11 / .25); color: #fde68a; }
+.glass-root .status-cancelled, .glass-root .status-expired { background: rgb(244 63 94 / .25); color: #fecdd3; }
+.glass-root .link-strong { color: #67e8f9; }
+.glass-root .admin-table th { color: rgb(255 255 255 / .7); border-bottom-color: rgb(255 255 255 / .25); }
+.glass-root .admin-table td { border-bottom-color: rgb(255 255 255 / .12); }
+.glass-root .guest-list button:hover { background: rgb(255 255 255 / .1); }
+.glass-root .guest-list button.on { background: rgb(34 211 238 / .16); box-shadow: inset 3px 0 0 #22d3ee; }
+.glass-root .timeline-admin li { background: rgb(255 255 255 / .08); }
+.glass-root .tl-type { background: rgb(255 255 255 / .14); }
+.glass-root .t-email { color: #67e8f9; } .glass-root .t-sms { color: #fcd34d; } .glass-root .t-inbound { color: #6ee7b7; } .glass-root .t-note { color: #fff; }
+.glass-root .te-list { top: 16px; }
+.glass-root .te-savebar { background: rgb(6 30 43 / .9); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border: 1px solid rgb(255 255 255 / .22); }
+.glass-root .pm-grid li, .glass-root .pm-add { background: rgb(255 255 255 / .07); }
+.glass-root .pm-grid li.cover { box-shadow: 0 0 0 2px rgb(34 211 238 / .35); }
+.glass-root .pm-empty { background: rgb(255 255 255 / .07); color: #fff; }
+.glass-root .pm-empty:hover, .glass-root .pm-empty:focus-visible { background: rgb(34 211 238 / .14); color: #fff; }
+.glass-root .icon-btn:hover:not(:disabled) { background: rgb(255 255 255 / .14); }
+.glass-root .stars, .glass-root .tour-card-foot { border-color: rgb(255 255 255 / .16); }
+.glass-root .te-card .tour-card { background: rgb(255 255 255 / .1); border-color: rgb(255 255 255 / .2); }
+
+@media (prefers-reduced-motion: reduce) { .glass-blob, .glass-shimmer::after { animation: none !important; } }
+
+/* ---------- Confirmation dialog inside the admin ---------- */
+.glass-root { --surface-solid: rgb(7 28 41 / .97); }
+.glass-root .confirm-card { border-color: rgb(255 255 255 / .22); }
+.glass-root .confirm-overlay { background: rgb(2 12 20 / .62); }
+.glass-root .btn-danger-solid { background: linear-gradient(135deg, #be123c, #e11d48); box-shadow: 0 8px 20px rgb(225 29 72 / .3); }

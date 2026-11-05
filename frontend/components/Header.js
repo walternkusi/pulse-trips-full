@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { usePrefs } from './Providers';
 import PrefsToggle from './PrefsToggle';
+import ThemeToggle from './ThemeToggle';
 import Icon from './Icons';
 
 // Brand mark: round logo + wordmark (used in header and footer).
@@ -73,6 +74,7 @@ export default function Header() {
 
         <div className="header-actions">
           <PrefsToggle className="hide-mobile" />
+          <ThemeToggle className="hide-mobile" />
           <Link href="/bookings" className="btn btn-sm btn-outline-light hide-mobile">{t('nav.myBooking')}</Link>
           <button className="icon-btn show-mobile" aria-expanded={open} aria-controls="mobile-nav" onClick={() => setOpen(!open)} aria-label={open ? t('nav.close') : t('nav.menu')}>
             <Icon name={open ? 'x' : 'menu'} size={24} />
@@ -86,6 +88,7 @@ export default function Header() {
           {links.map(([href, label]) => <Link key={href} href={href} aria-current={isActive(href) ? 'page' : undefined}>{label}</Link>)}
           <Link href="/bookings">{t('nav.myBooking')}</Link>
           <PrefsToggle className="prefs-mobile" />
+          <ThemeToggle withLabel />
         </nav>
       </div>
     </header>

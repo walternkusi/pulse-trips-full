@@ -10,6 +10,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ChatWidget from '@/components/ChatWidget';
 import PromoPopup from '@/components/PromoPopup';
+import ScrollEffects from '@/components/ScrollEffects';
+import { ConfirmProvider } from '@/components/ConfirmDialog';
 import { Analytics, ConsentBanner } from '@/components/Analytics';
 import { PrefsProvider } from '@/components/Providers';
 import { getServerContext } from '@/lib/prefs';
@@ -33,7 +35,10 @@ export const metadata = {
 };
 
 // Mobile browser chrome matches the brand navy.
-export const viewport = { themeColor: '#151A24', width: 'device-width', initialScale: 1 };
+export const viewport = { themeColor: '#151A24', width: 'device-width', initialScale: 1, colorScheme: 'light dark' };
+
+// Runs before the page paints: uses the saved choice, else the device setting. Prevents a white flash in dark mode.
+const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem('pt-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t}catch(e){}})()`;
 
 // Schema.org: tells search engines who we are (shows in Google's knowledge panel).
 const organizationLd = {
@@ -50,9 +55,11 @@ const organizationLd = {
 export default async function RootLayout({ children }) {
   const { lang, currency, rates, dict } = await getServerContext();
   return (
-    <html lang={lang} className={`${heading.variable} ${body.variable}`}>
+    <html lang={lang} className={`${heading.variable} ${body.variable}`} suppressHydrationWarning>
+      <head><script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} /></head>
       <body>
         <PrefsProvider lang={lang} currency={currency} rates={rates} dict={dict}>
+          <ConfirmProvider>
           {/* useSearchParams inside Analytics needs a Suspense boundary */}
           <Suspense fallback={null}><Analytics /></Suspense>
           <Header />
@@ -61,6 +68,8 @@ export default async function RootLayout({ children }) {
           <ChatWidget />
           <PromoPopup />
           <ConsentBanner />
+          <ScrollEffects />
+          </ConfirmProvider>
         </PrefsProvider>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} />
       </body>

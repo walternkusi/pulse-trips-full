@@ -17,6 +17,7 @@ import Link from 'next/link';
 import { api } from '@/lib/api';
 import { track } from '@/lib/analytics';
 import { usePrefs } from '@/components/Providers';
+import { useConfirm } from '@/components/ConfirmDialog';
 import AvailabilityCalendar from '@/components/AvailabilityCalendar';
 import Icon from '@/components/Icons';
 
@@ -40,6 +41,7 @@ function downloadIcs(booking, tour) {
 
 function BookingsInner() {
   const { t, money } = usePrefs();
+  const confirm = useConfirm();
   const params = useSearchParams();
   const [form, setForm] = useState({ reference: params.get('ref') || '', email: params.get('email') || '' });
   const [voucher, setVoucher] = useState(null);
@@ -93,7 +95,7 @@ function BookingsInner() {
   }
 
   async function cancel() {
-    if (!window.confirm(t('manage.confirmCancel'))) return;
+    if (!(await confirm({ title: t('manage.cancel'), message: t('manage.confirmCancel'), confirmLabel: t('manage.cancel'), cancelLabel: t('manage.keep'), tone: 'danger' }))) return;
     setBusy(true);
     try {
       const { booking } = await api.cancelBooking(voucher.booking.reference, voucher.booking.email);

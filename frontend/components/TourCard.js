@@ -43,7 +43,7 @@ export default function TourCard({ tour, priority = false }) {
               <b>{priceUsd(tour.pricing.adult)}</b>
               <span className="price-unit">{t('card.perAdult')}</span>
             </div>
-            <span className="btn btn-sm" aria-hidden="true">{t('card.view')}</span>
+            <span className="btn btn-sm" aria-hidden="true">{t('card.view')} <Icon name="arrowRight" size={15} /></span>
           </div>
         </div>
       </Link>

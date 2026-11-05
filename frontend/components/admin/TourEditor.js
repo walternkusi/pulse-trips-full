@@ -14,6 +14,7 @@ import { api } from '@/lib/api';
 import TourCard from '@/components/TourCard';
 import PhotoManager, { explain } from './PhotoManager';
 import Icon from '@/components/Icons';
+import { useConfirm } from '@/components/ConfirmDialog';
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -65,6 +66,7 @@ const BLANK = {
 };
 
 export default function TourEditor({ token }) {
+  const confirm = useConfirm();
   const [tours, setTours] = useState([]);
   const [addons, setAddons] = useState([]);
   const [options, setOptions] = useState({ countries: [], categories: [], levels: [] });
@@ -97,8 +99,8 @@ export default function TourEditor({ token }) {
     return () => window.removeEventListener('beforeunload', warn);
   }, [dirty]);
 
-  function choose(t) {
-    if (dirty && !window.confirm('Discard unsaved changes?')) return;
+  async function choose(t) {
+    if (dirty && !(await confirm({ title: 'Discard unsaved changes?', message: 'This tour has edits that are not saved yet. If you switch now they will be lost.', confirmLabel: 'Discard changes', cancelLabel: 'Keep editing', tone: 'danger' }))) return;
     open(t);
   }
 

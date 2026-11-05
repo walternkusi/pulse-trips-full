@@ -77,6 +77,15 @@ export default async function Home() {
         </ul>
       </section>
 
+      {/* ---------------- DESTINATIONS TICKER (decorative) ---------------- */}
+      <div className="marquee" aria-hidden="true">
+        <div className="marquee-track">
+          {[0, 1, 2, 3].map((k) => (
+            <div key={k} className="marquee-group">{countries.map((c) => <span key={c}>{c}</span>)}</div>
+          ))}
+        </div>
+      </div>
+
       {/* ---------------- FEATURED ---------------- */}
       <section className="section">
         <div className="wrap">
