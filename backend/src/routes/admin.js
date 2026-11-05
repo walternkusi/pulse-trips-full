@@ -115,6 +115,15 @@ adminRoutes.put('/admin/tours/:slug', (req, res) => {
   res.json({ tour: updateTourFrom(req.params.slug, req.body) });
 });
 
+// PATCH /api/admin/tours/:slug/published  body: { published: true|false }
+// Shows or hides one tour on the website without re-validating anything else (used by the Moderation page).
+adminRoutes.patch('/admin/tours/:slug/published', (req, res) => {
+  if (typeof req.body?.published !== 'boolean') throw new HttpError(400, 'Send { "published": true } or { "published": false }.');
+  const tour = store.updateTour(req.params.slug, { published: req.body.published });
+  if (!tour) throw new HttpError(404, 'Tour not found.');
+  res.json({ tour });
+});
+
 // POST /api/admin/uploads  body: { dataUrl } -> { src } (photo stored in storage/uploads)
 adminRoutes.post('/admin/uploads', (req, res) => {
   res.status(201).json(saveUpload(req.body?.dataUrl));

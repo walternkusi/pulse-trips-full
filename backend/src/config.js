@@ -9,6 +9,9 @@ export const config = {
   port: Number(process.env.PORT) || 4000,
   // Website origin allowed to call this API from a browser (CORS).
   frontendOrigin: process.env.FRONTEND_ORIGIN || 'http://localhost:3000',
+  // FRONTEND_ORIGIN may hold several website addresses separated by commas; `*` matches any text,
+  // e.g. https://my-site.vercel.app,https://my-site-*.vercel.app
+  frontendOrigins: (process.env.FRONTEND_ORIGIN || 'http://localhost:3000').split(',').map((o) => o.trim().replace(/\/+$/, '')).filter(Boolean),
   // Public URL of the website: used in emails, QR codes and payment redirects.
   siteUrl: process.env.SITE_URL || process.env.FRONTEND_ORIGIN || 'http://localhost:3000',
 

@@ -12,6 +12,7 @@
 // ⚠️  Run ONE copy of the API. Two servers would each hold their own in-memory
 //     copy and could sell the same seat twice.
 // =============================================================================
+import dns from 'node:dns';
 import { MongoClient } from 'mongodb';
 import { config } from '../config.js';
 
@@ -21,12 +22,32 @@ let client = null;
 let database = null;
 let chain = Promise.resolve(); // queue of pending writes
 
+async function open() {
+  const candidate = new MongoClient(config.mongodbUri, { serverSelectionTimeoutMS: 10000 });
+  try {
+    await candidate.connect();
+    const db = candidate.db(config.mongodbDb);
+    await db.command({ ping: 1 });
+    client = candidate;
+    database = db;
+  } catch (err) {
+    await candidate.close().catch(() => {});
+    throw err;
+  }
+}
+
 export async function connectDb() {
   if (!dbEnabled) return;
-  client = new MongoClient(config.mongodbUri, { serverSelectionTimeoutMS: 10000 });
-  await client.connect();
-  database = client.db(config.mongodbDb);
-  await database.command({ ping: 1 });
+  try {
+    await open();
+  } catch (err) {
+    // Phone hotspots, hotel Wi-Fi and some routers garble the DNS lookup that `mongodb+srv://`
+    // needs (error "querySrv EBADRESP"). Retry once with public DNS servers before giving up.
+    if (!/^query(Srv|Txt)$/.test(err.syscall || '')) throw err;
+    console.warn(`⚠️  Your network's DNS could not resolve Atlas (${err.code}). Retrying with public DNS (1.1.1.1, 8.8.8.8)...`);
+    dns.setServers(['1.1.1.1', '8.8.8.8']);
+    await open();
+  }
 }
 
 export const col = (name) => database.collection(name);

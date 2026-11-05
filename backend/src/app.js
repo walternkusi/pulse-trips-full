@@ -31,8 +31,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// Only our website may call the API from a browser.
-app.use(cors({ origin: config.frontendOrigin }));
+// Only our website may call the API from a browser (FRONTEND_ORIGIN can list several addresses).
+const allowedOrigins = config.frontendOrigins.map((o) => new RegExp(`^${o.split('*').map((part) => part.replace(/[.+?^${}()|[\]\\]/g, '\\$&')).join('[a-z0-9-]*')}$`, 'i'));
+app.use(cors({ origin: (origin, done) => done(null, !origin || allowedOrigins.some((re) => re.test(origin))) }));
 
 // --- Body parsing --------------------------------------------------------------
 // 1. Payment webhooks need the RAW body to verify the provider's signature.
