@@ -231,6 +231,16 @@
 
 @media (prefers-reduced-motion: reduce) { .glass-blob, .glass-shimmer::after { animation: none !important; } }
 
+/* ---------- ADMIN GUARD: the public site's new pill/glass theme must not change the admin ---------- */
+.glass-root { --btn-bg: linear-gradient(135deg, #0e7490, #0f766e); --btn-fg: #fff; --btn-bg-hover: linear-gradient(135deg, #0e7490, #0f766e); --r-lg: 20px; --r: 14px; --r-sm: 10px; --f-head: var(--f-body); }
+.glass-root .btn { border-radius: 10px; font-weight: 700; border: 0; }
+.glass-root .btn:hover:not(:disabled) { filter: brightness(1.06); }
+.glass-root .btn-outline, .glass-root .btn-danger, .glass-root .btn-ghost { border-radius: 10px; border-width: 1.5px; border-style: solid; }
+.glass-root .btn-ghost { border-color: transparent; }
+.glass-root .chip-btn.on, .glass-root .chip-btn.on:hover { background: #0e7490; border-color: #22d3ee; color: #fff; }
+.glass-root .card, .glass-root .tour-card, .glass-root .kpi, .glass-root .policy-table { -webkit-backdrop-filter: none; }
+.glass-root h1, .glass-root h2, .glass-root h3 { letter-spacing: -.01em; font-weight: 600; }
+
 /* ---------- Confirmation dialog inside the admin ---------- */
 .glass-root { --surface-solid: rgb(7 28 41 / .97); }
 .glass-root .confirm-card { border-color: rgb(255 255 255 / .22); }

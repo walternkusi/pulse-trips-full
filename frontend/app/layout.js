@@ -5,7 +5,7 @@
 // =============================================================================
 import './globals.css';
 import { Suspense } from 'react';
-import { Poppins, Inter } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ChatWidget from '@/components/ChatWidget';
@@ -16,9 +16,8 @@ import { Analytics, ConsentBanner } from '@/components/Analytics';
 import { PrefsProvider } from '@/components/Providers';
 import { getServerContext } from '@/lib/prefs';
 
-// next/font self-hosts the fonts (no request to Google at runtime, no layout shift).
-// Poppins matches the bold geometric wordmark in the logo; Inter is very readable for body text.
-const heading = Poppins({ subsets: ['latin'], weight: ['600', '700', '800'], variable: '--f-head', display: 'swap' });
+// next/font self-hosts the font (no request to Google at runtime, no layout shift).
+// One clean sans-serif (Inter) for headings and text, like the reference design.
 const body = Inter({ subsets: ['latin'], variable: '--f-body', display: 'swap' });
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
@@ -55,7 +54,7 @@ const organizationLd = {
 export default async function RootLayout({ children }) {
   const { lang, currency, rates, dict } = await getServerContext();
   return (
-    <html lang={lang} className={`${heading.variable} ${body.variable}`} suppressHydrationWarning>
+    <html lang={lang} className={body.variable} suppressHydrationWarning>
       <head><script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} /></head>
       <body>
         <PrefsProvider lang={lang} currency={currency} rates={rates} dict={dict}>
